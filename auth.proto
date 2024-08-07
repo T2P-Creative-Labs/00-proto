@@ -8,6 +8,10 @@ service AuthService {
   rpc Validate (ValidateRequest) returns (ValidateResponse) {}
 }
 
+message Token {
+  string accessToken = 1;
+  string refreshToken = 2;
+}
 // Login
 message LoginRequest {
   string email = 1;
@@ -17,8 +21,7 @@ message LoginRequest {
 message LoginResponse {
   int32 status = 1;
   repeated string error = 2;
-  string accessToken = 3;
-  string refreshToken = 4;
+  Token data = 3;
 }
 
 // Refresh
@@ -29,8 +32,7 @@ message RefreshRequest {
 message RefreshResponse {
   int32 status = 1;
   repeated string error = 2;
-  string accessToken = 3;
-  string refreshToken = 4;
+  Token data = 3;
 }
 
 // Validate
@@ -42,5 +44,15 @@ message ValidateResponse {
   int32 status = 1;
   repeated string error = 2;
   string email = 3;
+}
+
+message RegisterRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message RegisterResponse {
+  int32 status = 1;
+  repeated string error = 2;
 }
 
