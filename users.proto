@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package users;
+
+import "common.proto";
+
+service AuthService {
+  rpc Register(RegisterRequest) returns (RegisterResponse) {}
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {}
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {}
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {}
+  rpc Query(QueryRequest) returns (QueryResponse) {}
+}
+
+message User {
+  int32 id = 1;
+  string email = 2;
+  string firstName = 3;
+  string lastName = 4;
+  bool isActive = 5;
+  Role roleEntity = 7;
+}
+message Role {
+  int32 id = 1;
+  string name = 2;
+  repeated Permission permissions = 3;
+}
+
+message Permission {
+  int32 id = 1;
+  string name = 2;
+}
+
+message RegisterRequest {
+  User user = 1;
+}
+
+message RegisterResponse {
+  common.CommonResponse info = 1;
+  User data = 3;
+}
+
+message GetUserRequest {
+  int32 id = 1;
+}
+
+message GetUserResponse {
+  common.CommonResponse info = 1;
+  User data = 3;
+}
+
+message UpdateUserRequest {
+  User user = 1;
+}
+
+message UpdateUserResponse {
+  common.CommonResponse info = 1;
+  User data = 3;
+}
+
+
