@@ -4,7 +4,7 @@ package users;
 
 import "common.proto";
 
-service AuthService {
+service UsersService {
   rpc Register(RegisterRequest) returns (RegisterResponse) {}
   rpc GetUser(GetUserRequest) returns (GetUserResponse) {}
   rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {}
