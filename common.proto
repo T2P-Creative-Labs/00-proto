@@ -8,7 +8,7 @@ message Condition {
   string value = 3;
 }
 
-message Filter {
+message FilterRequest {
   repeated Condition conditions = 1;
   string order = 2;
   int32 limit = 3;

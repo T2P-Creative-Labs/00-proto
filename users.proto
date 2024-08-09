@@ -9,7 +9,7 @@ service AuthService {
   rpc GetUser(GetUserRequest) returns (GetUserResponse) {}
   rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {}
   rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {}
-  rpc Query(QueryRequest) returns (QueryResponse) {}
+  rpc Filter(common.FilterRequest) returns (FilterResponse) {}
 }
 
 message User {
@@ -58,4 +58,15 @@ message UpdateUserResponse {
   User data = 3;
 }
 
+message DeleteUserRequest {
+  int32 id = 1;
+}
 
+message DeleteUserResponse {
+  common.CommonResponse info = 1;
+}
+
+message FilterResponse {
+  common.CommonResponse info = 1;
+  repeated User data = 3;
+}
