@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package files;
+
+import "common.proto";
+
+service FilesService {
+  rpc Upload(UploadRequest) returns (UploadResponse) {}
+  rpc Download(DownloadRequest) returns (DownloadResponse) {}
+  rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+}
+
+message UploadRequest {
+  string fileName = 1;
+  any file = 2;
+}
+
+message UploadResponse {
+  common.CommonResponse info = 1;
+  string url = 2;
+}
+
+message DownloadRequest {
+  string url = 1;
+}
+
+message DownloadResponse {
+  common.CommonResponse info = 1;
+  string url = 2;
+}
+
+message DeleteRequest {
+  string url = 1;
+}
+
+message DeleteResponse {
+  common.CommonResponse info = 1;
+}
