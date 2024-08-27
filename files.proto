@@ -12,7 +12,7 @@ service FilesService {
 
 message UploadRequest {
   string fileName = 1;
-  any file = 2;
+  bytes file = 2;
 }
 
 message UploadResponse {
