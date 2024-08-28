@@ -25,12 +25,12 @@ message UploadResponse {
 }
 
 message DownloadRequest {
-  string url = 1;
+  string filename = 1;
 }
 
 message DownloadResponse {
   common.CommonResponse info = 1;
-  string url = 2;
+  bytes file = 1;
 }
 
 message DeleteRequest {
