@@ -33,6 +33,15 @@ message DownloadResponse {
   bytes file = 2;
 }
 
+message PlayRequest {
+  string url = 1;
+}
+
+message PlayResponse {
+  common.CommonResponse info = 1;
+  string url = 2;
+}
+
 message DeleteRequest {
   string url = 1;
 }
