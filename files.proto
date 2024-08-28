@@ -30,7 +30,7 @@ message DownloadRequest {
 
 message DownloadResponse {
   common.CommonResponse info = 1;
-  bytes file = 1;
+  bytes file = 2;
 }
 
 message DeleteRequest {
