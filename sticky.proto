@@ -2,32 +2,66 @@ syntax = "proto3";
 
 package sticky;
 
-import "common.proto";
+import "google/protobuf/timestamp.proto";
 
 service StickyService {
-  rpc Create(CreateRequest) returns (CreateResponse) {}
-  rpc Read(ReadRequest) returns (ReadResponse) {}
-  rpc Update(UpdateRequest) returns (UpdateResponse) {}
-  rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+  rpc CreateSticky (CreateStickyRequest) returns (StickyResponse);
+  rpc GetSticky (GetStickyRequest) returns (StickyResponse);
+  rpc UpdateSticky (UpdateStickyRequest) returns (StickyResponse);
+  rpc DeleteSticky (DeleteStickyRequest) returns (DeleteStickyResponse);
+  rpc FilterStickies (FilterStickiesRequest) returns (FilterStickiesResponse);
 }
 
-message CreateRequest {
-  string name = 1;
-  string description = 2;
+message Sticky {
+  optional string id = 1;
+  optional string title = 2;
+  optional string content = 3;
+  repeated string tag_ids = 4;
+  optional string due_date = 5;
+  optional string start_date = 6;
+  optional string list_id = 7;
+  optional string color = 8;
 }
 
-message CreateResponse {
-  common.CommonResponse info = 1;
-  string id = 2;
+message TagIds {
+  repeated string tag_ids = 1;
 }
 
-message ListRequest {
-  int32 page = 1;
-  int32 limit = 2;
+message CreateStickyRequest {
+  Sticky sticky = 1;
 }
 
-message ListResponse {
-  common.CommonResponse info = 1;
-  repeated Sticky sticky = 2;
+message GetStickyRequest {
+  string id = 1;
 }
-  
+
+message UpdateStickyRequest {
+  Sticky sticky = 1;
+}
+
+message DeleteStickyRequest {
+  string id = 1;
+}
+
+message DeleteStickyResponse {
+  bool success = 1;
+}
+
+message FilterStickiesRequest {
+  optional string list_id = 1;
+  optional TagIds tag_ids = 2;
+  optional google.protobuf.Timestamp due_date_start = 3;
+  optional google.protobuf.Timestamp due_date_end = 4;
+  optional string search_term = 5;
+  optional int32 page = 6;
+  optional int32 limit = 7;
+}
+
+message FilterStickiesResponse {
+  repeated Sticky stickies = 1;
+  int32 total = 2;
+}
+
+message StickyResponse {
+  Sticky sticky = 1;
+}
