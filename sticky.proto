@@ -3,7 +3,6 @@ syntax = "proto3";
 package sticky;
 
 import "google/protobuf/timestamp.proto";
-
 import "common.proto";
 
 service StickyService {
@@ -12,10 +11,18 @@ service StickyService {
   rpc UpdateSticky (UpdateStickyRequest) returns (UpdateStickyResponse);
   rpc DeleteSticky (DeleteStickyRequest) returns (DeleteStickyResponse);
   rpc FilterStickies (FilterStickiesRequest) returns (FilterStickiesResponse);
-  rpc GetStickyTags (GetStickyTagsRequest) returns (GetStickyTagsResponse);
-  rpc GetStickyList (GetStickyListRequest) returns (GetStickyListResponse);
   rpc GetColorOptions (GetColorOptionsRequest) returns (GetColorOptionsResponse);
   rpc UpdateStickyPriority (UpdateStickyPriorityRequest) returns (UpdateStickyPriorityResponse);
+
+  rpc CreateStickyTag (CreateStickyTagRequest) returns (CreateStickyTagResponse);
+  rpc GetStickyTags (GetStickyTagsRequest) returns (GetStickyTagsResponse);
+  rpc UpdateStickyTag (UpdateStickyTagRequest) returns (UpdateStickyTagResponse);
+  rpc DeleteStickyTag (DeleteStickyTagRequest) returns (DeleteStickyTagResponse);
+
+  rpc CreateStickyList (CreateStickyListRequest) returns (CreateStickyListResponse);
+  rpc GetStickyList (GetStickyListRequest) returns (GetStickyListResponse);
+  rpc UpdateStickyList (UpdateStickyListRequest) returns (UpdateStickyListResponse);
+  rpc DeleteStickyList (DeleteStickyListRequest) returns (DeleteStickyListResponse);
 }
 
 message Sticky {
@@ -27,6 +34,7 @@ message Sticky {
   optional string start_date = 6;
   optional string list_id = 7;
   optional string color = 8;
+  optional int32 priority = 9;
 }
 
 message List {
@@ -48,6 +56,65 @@ message ColorOption {
 
 message TagIds {
   repeated string tag_ids = 1;
+}
+
+message CreateStickyListRequest {
+  common.CurrentUser user = 1;
+  optional string name = 2;
+}
+
+message CreateStickyListResponse {
+  common.CommonResponse info = 1;
+  optional List data = 2;
+}
+
+message UpdateStickyListRequest {
+  common.CurrentUser user = 1;
+  optional string id = 2;
+  optional string name = 3;
+}
+
+message UpdateStickyListResponse {
+  common.CommonResponse info = 1;
+  optional List data = 2;
+}
+
+message DeleteStickyListRequest {
+  common.CurrentUser user = 1;
+  optional string id = 2;
+}
+
+message DeleteStickyListResponse {
+  common.CommonResponse info = 1;
+}
+
+message CreateStickyTagRequest {
+  common.CurrentUser user = 1;
+  optional Tag tag = 2;
+}
+
+message CreateStickyTagResponse {
+  common.CommonResponse info = 1;
+  optional Tag data = 2;
+}
+
+message UpdateStickyTagRequest {
+  common.CurrentUser user = 1;
+  optional Tag tag = 2;
+}
+
+message UpdateStickyTagResponse {
+  common.CommonResponse info = 1;
+  optional Tag data = 2;
+}
+
+message DeleteStickyTagRequest {
+  common.CurrentUser user = 1;
+  optional string id = 2;
+}
+
+message DeleteStickyTagResponse {
+  common.CommonResponse info = 1;
 }
 
 message StickyPriority {
@@ -137,5 +204,3 @@ message FilterStickiesResponse {
   repeated Sticky stickies = 2;
   int32 total = 3;
 }
-
-
