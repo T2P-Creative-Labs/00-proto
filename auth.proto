@@ -23,9 +23,8 @@ message LoginRequest {
 }
 
 message LoginResponse {
-  int32 status = 1;
-  repeated string error = 2;
-  Token data = 3;
+  common.CommonResponse info = 1;
+  Token data = 2;
 }
 
 // Refresh
@@ -34,9 +33,8 @@ message RefreshRequest {
 }
 
 message RefreshResponse {
-  int32 status = 1;
-  repeated string error = 2;
-  Token data = 3;
+  common.CommonResponse info = 1;
+  Token data = 2;
 }
 
 // Validate
@@ -46,7 +44,7 @@ message ValidateRequest {
 
 message ValidateResponse {
   common.CommonResponse info = 1;
-  common.CurrentUser user = 2;
+  common.CurrentUser data = 2;
 }
 
 message RegisterRequest {
@@ -55,8 +53,8 @@ message RegisterRequest {
 }
 
 message RegisterResponse {
-  int32 status = 1;
-  repeated string error = 2;
+  common.CommonResponse info = 1;
+  optional common.CurrentUser data = 2;
 }
 
 message LogoutRequest {
