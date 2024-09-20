@@ -4,12 +4,18 @@ package sticky;
 
 import "google/protobuf/timestamp.proto";
 
+import "common.proto";
+
 service StickyService {
-  rpc CreateSticky (CreateStickyRequest) returns (StickyResponse);
-  rpc GetSticky (GetStickyRequest) returns (StickyResponse);
-  rpc UpdateSticky (UpdateStickyRequest) returns (StickyResponse);
+  rpc CreateSticky (CreateStickyRequest) returns (CreateStickyResponse);
+  rpc GetSticky (GetStickyRequest) returns (GetStickyResponse);
+  rpc UpdateSticky (UpdateStickyRequest) returns (UpdateStickyResponse);
   rpc DeleteSticky (DeleteStickyRequest) returns (DeleteStickyResponse);
   rpc FilterStickies (FilterStickiesRequest) returns (FilterStickiesResponse);
+  rpc GetStickyTags (GetStickyTagsRequest) returns (GetStickyTagsResponse);
+  rpc GetStickyList (GetStickyListRequest) returns (GetStickyListResponse);
+  rpc GetColorOptions (GetColorOptionsRequest) returns (GetColorOptionsResponse);
+  rpc UpdateStickyPriority (UpdateStickyPriorityRequest) returns (UpdateStickyPriorityResponse);
 }
 
 message Sticky {
@@ -23,45 +29,113 @@ message Sticky {
   optional string color = 8;
 }
 
+message List {
+  optional string id = 1;
+  optional string name = 2;
+}
+
+message Tag {
+  optional string id = 1;
+  optional string name = 2;
+  optional ColorOption colorOptions = 3;
+}
+
+message ColorOption {
+  optional string id = 1;
+  optional string name = 2;
+  optional string color = 3;
+}
+
 message TagIds {
   repeated string tag_ids = 1;
 }
 
+message StickyPriority {
+  optional string id = 1;
+  optional string priority = 2;
+}
+
+message UpdateStickyPriorityRequest {
+  repeated StickyPriority sticky_priority = 1;
+}
+
+message UpdateStickyPriorityResponse {
+  common.CommonResponse info = 1;
+}
+
+message GetColorOptionsRequest {}
+
+message GetColorOptionsResponse {
+  common.CommonResponse info = 1;
+  repeated ColorOption data = 2;
+}
+
+message GetStickyTagsRequest {
+  common.CurrentUser user = 1;
+}
+
+message GetStickyTagsResponse {
+  common.CommonResponse info = 1;
+  repeated Tag data = 2;
+}
+
+message GetStickyListRequest {
+  common.CurrentUser user = 1;
+}
+
+message GetStickyListResponse {
+  common.CommonResponse info = 1;
+  repeated List data = 2;
+}
+
 message CreateStickyRequest {
-  Sticky sticky = 1;
+  common.CurrentUser user = 1;
+  Sticky sticky = 2;
+}
+
+message CreateStickyResponse {
+  common.CommonResponse info = 1;
+  Sticky sticky = 2;
 }
 
 message GetStickyRequest {
-  string id = 1;
+  common.CurrentUser user = 1;
+  string id = 2;
+}
+
+message GetStickyResponse {
+  common.CommonResponse info = 1;
+  Sticky sticky = 2;
 }
 
 message UpdateStickyRequest {
-  Sticky sticky = 1;
+  common.CurrentUser user = 1;
+  Sticky sticky = 2;
+}
+
+message UpdateStickyResponse {
+  common.CommonResponse info = 1;
+  Sticky sticky = 2;
 }
 
 message DeleteStickyRequest {
-  string id = 1;
+  common.CurrentUser user = 1;
+  string id = 2;
 }
 
 message DeleteStickyResponse {
-  bool success = 1;
+  common.CommonResponse info = 1;
 }
 
 message FilterStickiesRequest {
-  optional string list_id = 1;
-  optional TagIds tag_ids = 2;
-  optional google.protobuf.Timestamp due_date_start = 3;
-  optional google.protobuf.Timestamp due_date_end = 4;
-  optional string search_term = 5;
-  optional int32 page = 6;
-  optional int32 limit = 7;
+  common.FilterRequest filter = 1;
+  common.CurrentUser user = 8;
 }
 
 message FilterStickiesResponse {
-  repeated Sticky stickies = 1;
-  int32 total = 2;
+  common.CommonResponse info = 1;
+  repeated Sticky stickies = 2;
+  int32 total = 3;
 }
 
-message StickyResponse {
-  Sticky sticky = 1;
-}
+

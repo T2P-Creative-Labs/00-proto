@@ -2,11 +2,14 @@ syntax = "proto3";
 
 package auth;
 
+import "common.proto";
+
 service AuthService {
   rpc Login (LoginRequest) returns (LoginResponse) {}
   rpc Refresh (RefreshRequest) returns (RefreshResponse) {}
   rpc Validate (ValidateRequest) returns (ValidateResponse) {}
   rpc Register (RegisterRequest) returns (RegisterResponse) {}
+  rpc Logout (LogoutRequest) returns (LogoutResponse) {}
 }
 
 message Token {
@@ -42,9 +45,8 @@ message ValidateRequest {
 }
 
 message ValidateResponse {
-  int32 status = 1;
-  repeated string error = 2;
-  string email = 3;
+  common.CommonResponse info = 1;
+  common.CurrentUser user = 2;
 }
 
 message RegisterRequest {
@@ -55,5 +57,14 @@ message RegisterRequest {
 message RegisterResponse {
   int32 status = 1;
   repeated string error = 2;
+}
+
+message LogoutRequest {
+  string accessToken = 1;
+  string refreshToken = 2;
+}
+
+message LogoutResponse {
+  common.CommonResponse info = 1;
 }
 
